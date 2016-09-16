@@ -50,6 +50,8 @@ public class MyLocationNewOverlay extends Overlay implements IMyLocationConsumer
 	protected Paint mPaint = new Paint();
 	protected Paint mCirclePaint = new Paint();
 
+	protected final float mScale;
+
 	protected Bitmap mPersonBitmap;
 	protected Bitmap mDirectionArrowBitmap;
 
@@ -100,7 +102,8 @@ public class MyLocationNewOverlay extends Overlay implements IMyLocationConsumer
 	}
 
 	public MyLocationNewOverlay(IMyLocationProvider myLocationProvider, MapView mapView) {
-		super(mapView.getContext());
+		super();
+		mScale = mapView.getContext().getResources().getDisplayMetrics().density;
 
 		mMapView = mapView;
 		mMapController = mapView.getController();
@@ -500,12 +503,12 @@ public class MyLocationNewOverlay extends Overlay implements IMyLocationConsumer
 		mLocation = location;
 
 		// Cache location point
-		mMapView.getProjection().toProjectedPixels((int) (mLocation.getLatitude() * 1E6),
-				(int) (mLocation.getLongitude() * 1E6), mMapCoordsProjected);
+		mMapView.getProjection().toProjectedPixels(mLocation.getLatitude(),
+				mLocation.getLongitude(), mMapCoordsProjected);
 
 		if (mIsFollowing) {
-			mGeoPoint.setLatitudeE6((int) (mLocation.getLatitude() * 1E6));
-			mGeoPoint.setLongitudeE6((int) (mLocation.getLongitude() * 1E6));
+			mGeoPoint.setLatitude(mLocation.getLatitude());
+			mGeoPoint.setLongitude(mLocation.getLongitude());
 			mMapController.animateTo(mGeoPoint);
 		} else {
 			// Get new drawing bounds

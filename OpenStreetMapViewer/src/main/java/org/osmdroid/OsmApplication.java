@@ -12,14 +12,12 @@ import org.acra.annotation.ReportsCrashes;
 import org.acra.collector.CrashReportData;
 import org.acra.sender.ReportSender;
 import org.acra.sender.ReportSenderException;
+import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * This is the base application for the sample app. We only use to catch errors during development cycles
@@ -33,6 +31,13 @@ public class OsmApplication extends Application{
         super.onCreate();
         LeakCanary.install(this);
         Thread.currentThread().setUncaughtExceptionHandler(new OsmUncaughtExceptionHandler());
+
+        //https://github.com/osmdroid/osmdroid/issues/366
+
+        //super important. Many tile servers, including open street maps, will BAN applications by user
+        //agent. Do not use the sample application's user agent for your app! Use your own setting, such
+        //as the app id.
+        OpenStreetMapTileProviderConstants.setUserAgentValue(BuildConfig.APPLICATION_ID);
     }
 
     @Override
@@ -80,32 +85,21 @@ public class OsmApplication extends Application{
 
         @Override
         public void send(Context context, CrashReportData crashReportData) throws ReportSenderException {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss",
-                    Locale.US);
-            String timeStamp = sdf.format(new Date());
+
             String rootDirectory = Environment.getExternalStorageDirectory()
                     .getAbsolutePath();
             File f = new File(rootDirectory
                     + File.separatorChar
-                    + "TCE"
-                    + File.separatorChar
-                    + "logs"
-                    + File.separatorChar
-                    + "crash"
+                    + "osmdroid"
                     + File.separatorChar);
             f.mkdirs();
             f = new File(rootDirectory
                     + File.separatorChar
-                    + "TCE"
+                    + "osmdroid"
                     + File.separatorChar
-                    + "logs"
-                    + File.separatorChar
-                    + "crash"
-                    + File.separatorChar
-                    + "CRASH_"
-                    + BuildConfig.APPLICATION_ID+ "_"
-                    + timeStamp + ".log");
-            f.delete();
+                    + "crash.log");
+            if (f.exists())
+                f.delete();
 
             try {
                 f.createNewFile();

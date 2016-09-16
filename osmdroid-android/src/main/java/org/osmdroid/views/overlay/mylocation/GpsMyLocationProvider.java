@@ -94,8 +94,8 @@ public class GpsMyLocationProvider implements IMyLocationProvider, LocationListe
 	/**
 	 * Enable location updates and show your current location on the map. By default this will
 	 * request location updates as frequently as possible, but you can change the frequency and/or
-	 * distance by calling {@link setLocationUpdateMinTime(long)} and/or {@link
-	 * setLocationUpdateMinDistance(float)} before calling this method.
+	 * distance by calling {@link #setLocationUpdateMinTime} and/or {@link
+	 * #setLocationUpdateMinDistance} before calling this method.
 	 */
 	@Override
 	public boolean startLocationProvider(IMyLocationConsumer myLocationConsumer) {
@@ -114,7 +114,9 @@ public class GpsMyLocationProvider implements IMyLocationProvider, LocationListe
 	@Override
 	public void stopLocationProvider() {
 		mMyLocationConsumer = null;
-		mLocationManager.removeUpdates(this);
+		if(mLocationManager != null){
+			mLocationManager.removeUpdates(this);
+		}
 	}
 
 	@Override
