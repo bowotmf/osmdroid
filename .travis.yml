@@ -34,6 +34,8 @@ android:
     - addon-google_apis-google-23
     - sys-img-armeabi-v7a-android-23
     - sys-img-armeabi-v7a-addon-google_apis-google-23
+    - sys-img-armeabi-v7a-google_apis-23
+    - sys-img-armeabi-v7a-android-23
 
 
 sudo: required
