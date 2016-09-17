@@ -88,7 +88,7 @@ android.applicationVariants.all { variant ->
             def mypermission = 'android.permission.WRITE_EXTERNAL_STORAGE '
             commandLine "$adb shell pm grant ${variant.applicationId} $mypermission".split(' ')
         }
-        variant.testVariant.connectedInstrumentTest.dependsOn "configDevice${variant.name.capitalize()}"
+        variant.testVariant.connectedInstrumentTest.dependsOn "configDevice2${variant.name.capitalize()}"
     }
 }
 
@@ -105,6 +105,6 @@ android.applicationVariants.all { variant ->
             def mypermission = 'android.permission.READ_EXTERNAL_STORAGE '
             commandLine "$adb shell pm grant ${variant.applicationId} $mypermission".split(' ')
         }
-        variant.testVariant.connectedInstrumentTest.dependsOn "configDevice${variant.name.capitalize()}"
+        variant.testVariant.connectedInstrumentTest.dependsOn "configDevice3${variant.name.capitalize()}"
     }
 }
