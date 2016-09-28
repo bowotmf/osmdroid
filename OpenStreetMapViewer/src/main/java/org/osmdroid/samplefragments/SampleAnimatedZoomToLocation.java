@@ -34,6 +34,7 @@ public class SampleAnimatedZoomToLocation extends BaseSampleFragment {
     super.onPause();
     if(mGpsMyLocationProvider != null) {
       mGpsMyLocationProvider.stopLocationProvider();
+      mGpsMyLocationProvider.destroy();
     }
   }
 

@@ -101,6 +101,8 @@ public class ExtraSamplesTest extends ActivityInstrumentationTestCase2<ExtraSamp
 
                     }
                 });
+
+                //inject a home key, then relanuch 5 times to make it resumes correctly.
                 try {
                     Thread.sleep(2000);
                     activity.runOnUiThread(new Runnable() {
