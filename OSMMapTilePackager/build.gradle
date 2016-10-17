@@ -2,7 +2,6 @@ description = "A tool to package OpenStreetMap tiles"
 apply plugin: 'java'
 apply plugin: 'distribution'
 apply plugin: 'application'
-apply plugin: 'maven'
 
 mainClassName = "org.osmdroid.mtp.OSMMapTilePackager"
 
